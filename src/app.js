@@ -1,5 +1,11 @@
 
-const dolgozoTorzs = document.querySelector("#dolgozoTorzs")
+const dolgozoTorzs = document.querySelector("#dolgozoTorzs");
+const nameElem = document.querySelector("#name");
+const cityElem = document.querySelector("#city");
+const salaryElem = document.querySelector("#salary");
+const addButton = document.querySelector("#addButton");
+
+
 
 const dolgozoLista = [
     {name: "Pali", city: "Szolnok", salary: 385},
@@ -11,6 +17,7 @@ const dolgozoLista = [
     {name: "Géza", city: "Pécs", salary: 325}
 ];
 
+function loadEmloyees(){
 dolgozoLista.forEach((dolgozo) => {
     console.log(dolgozo.city);
     
@@ -23,7 +30,34 @@ dolgozoLista.forEach((dolgozo) => {
     tdCity.textContent = dolgozo.city;
     tdSalary.textContent = dolgozo.salary;
 
-
     dolgozoTorzs.append(tr);
     tr.append(tdName, tdCity, tdSalary);
 });
+}
+
+addButton.addEventListener('click', () => {
+    console.log("működik");
+    addEmployee();
+});
+
+loadEmloyees();
+
+function addEmployee(){
+    dolgozo = {
+        name: nameElem.value,
+        city: cityElem.value,
+        salary: salaryElem.value
+    }
+    dolgozoLista.push(dolgozo);
+    console.log(dolgozoLista);
+
+    clearFields();
+    dolgozoTorzs.innerHTML = '';  //vagy text.content inner helyett
+    loadEmloyees();
+}
+
+function clearFields(){
+    nameElem.value = '',
+    cityElem.value = '',
+    salaryElem.value = ''
+}
