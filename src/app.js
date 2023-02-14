@@ -19,7 +19,6 @@ const dolgozoLista = [
 
 function loadEmloyees(){
 dolgozoLista.forEach((dolgozo) => {
-    console.log(dolgozo.city);
     
     let tr = document.createElement("tr");
     let tdName =document.createElement("td");    
@@ -37,7 +36,6 @@ dolgozoLista.forEach((dolgozo) => {
 }
 
 addButton.addEventListener('click', () => {
-    console.log("működik");
     addEmployee();
 });
 
@@ -48,14 +46,22 @@ function generateDeleteButton(id){
     let button =document.createElement("button");
     button.textContent = "Törlés";
     button.classList= "btn btn-primary";
-    handleEvents(button, id);
+    handleDeleteEvent(button, id);
     tdDel.append(button);
     return tdDel;
 }
 
-function handleEvents(button, id){
+function handleDeleteEvent(button, id){
     button.addEventListener('click', () => {
-        console.log(id)
+        let delIndex = 0;
+        dolgozoLista.forEach((dolgozo, index) => {
+            if(dolgozo.id == id){
+                delIndex = index;
+            }
+        });
+        dolgozoLista.splice(delIndex, 1);
+        dolgozoTorzs.innerHTML = '';
+        loadEmloyees();
     });
 }
 
@@ -66,7 +72,7 @@ function addEmployee(){
         salary: salaryElem.value
     }
     dolgozoLista.push(dolgozo);
-    console.log(dolgozoLista);
+
 
     clearFields();
     dolgozoTorzs.innerHTML = '';  //vagy text.content inner helyett
