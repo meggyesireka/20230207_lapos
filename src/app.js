@@ -5,6 +5,11 @@ const cityElem = document.querySelector("#city");
 const salaryElem = document.querySelector("#salary");
 const addButton = document.querySelector("#addButton");
 
+const modifyIdInput = document.querySelector("#modifyId");
+const modifyNameInput = document.querySelector("#modifyName");
+const modifyCityInput = document.querySelector("#modifyCity");
+const modifySalaryInput = document.querySelector("#modifySalary");
+
 
 
 const dolgozoLista = [
@@ -32,6 +37,7 @@ dolgozoLista.forEach((dolgozo) => {
     dolgozoTorzs.append(tr);
     tr.append(tdName, tdCity, tdSalary);
     tr.append(generateDeleteButton(dolgozo.id));
+    tr.append(generateModifyButton(dolgozo));
 });
 }
 
@@ -50,7 +56,6 @@ function generateDeleteButton(id){
     tdDel.append(button);
     return tdDel;
 }
-
 function handleDeleteEvent(button, id){
     button.addEventListener('click', () => {
         let delIndex = 0;
@@ -64,6 +69,33 @@ function handleDeleteEvent(button, id){
         loadEmloyees();
     });
 }
+
+function generateModifyButton(dolgozo){
+    let tdModify =document.createElement("td");
+    let button =document.createElement("button");
+    button.textContent = "Módosítás";
+    button.classList= "btn btn-primary";
+    button.setAttribute('data-bs-toggle', 'modal');
+    button.setAttribute('data-bs-target', '#modifyModal');
+    handleModifyEvent(button, dolgozo);
+    tdModify.append(button);
+    return tdModify;
+}
+
+
+function handleModifyEvent(button, dolgozo){
+    button.addEventListener('click', () => {
+        console.log(dolgozo.name);
+        modifyIdInput.value = dolgozo.id;
+        modifyNameInput.value = dolgozo.name;
+        modifyCityInput.value = dolgozo.city;
+        modifySalaryInput.value = dolgozo.salary;
+
+    });
+}
+
+
+
 
 function addEmployee(){
     dolgozo = {
