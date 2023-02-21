@@ -10,6 +10,8 @@ const modifyNameInput = document.querySelector("#modifyName");
 const modifyCityInput = document.querySelector("#modifyCity");
 const modifySalaryInput = document.querySelector("#modifySalary");
 
+const saveButton = document.querySelector("#saveButton");
+
 
 
 const dolgozoLista = [
@@ -26,16 +28,20 @@ function loadEmloyees(){
 dolgozoLista.forEach((dolgozo) => {
     
     let tr = document.createElement("tr");
-    let tdName =document.createElement("td");    
-    let tdCity =document.createElement("td");    
-    let tdSalary =document.createElement("td")
+    let tdId = document.createElement("td");
+    let tdName = document.createElement("td");    
+    let tdCity = document.createElement("td");    
+    let tdSalary = document.createElement("td");
+    tdId.textContent = dolgozo.id;
+
+
 
     tdName.textContent = dolgozo.name;
     tdCity.textContent = dolgozo.city;
     tdSalary.textContent = dolgozo.salary;
 
     dolgozoTorzs.append(tr);
-    tr.append(tdName, tdCity, tdSalary);
+    tr.append(tdId, tdName, tdCity, tdSalary);
     tr.append(generateDeleteButton(dolgozo.id));
     tr.append(generateModifyButton(dolgozo));
 });
@@ -94,8 +100,25 @@ function handleModifyEvent(button, dolgozo){
     });
 }
 
+saveButton.addEventListener('click', () => {
+    console.log("mentés");
+    let id = modifyIdInput.value;
+    let name = modifyNameInput.value;
+    let city = modifyCityInput.value;
+    let salary = modifySalaryInput.value;
+    // console.log(id);
 
-
+    dolgozoLista.forEach( (dolgozo) => {
+        if (dolgozo.id == id){
+            console.log(dolgozo.name);
+            dolgozo.name = name;
+            dolgozo.city = city;
+            dolgozo.salary = salary;
+        };
+        dolgozoTorzs.textContent= '';
+        loadEmloyees();
+    } )
+});
 
 function addEmployee(){
     dolgozo = {
